@@ -3,7 +3,7 @@ app_name: sonarqube
 jenkins_url: http://jenkins:80
 upstream_sq_version: 7.9.6-community
 sonar_search_java_additional_opts: '-Dnode.store.allow_mmapfs=false'
-build_repo: https://github.com/redhat-cop/containers-quickstarts.git
+build_repo: https://github.com/abauchet/containers-quickstarts.git
 build_ref: master
 
 build:
