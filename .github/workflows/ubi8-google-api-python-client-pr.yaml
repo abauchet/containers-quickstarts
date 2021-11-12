@@ -1,0 +1,38 @@
+name: ubi8-google-api-python-client-pr
+on:
+  pull_request:
+    paths:
+      - utilities/ubi8-google-api-python-client/**
+      - .github/workflows/ubi8-google-api-python-client-pr.yaml
+jobs:
+  build:
+    env:
+      context: utilities/ubi8-google-api-python-client
+      image_name: ubi8-google-api-python-client
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v1
+      - name: Check and verify version.json
+        id: check_version
+        run: |
+          echo -n ::set-output name=IMAGE_TAGS::
+          echo $(jq -r '.version' ${context}/version.json)
+      - name: Build image
+        uses: redhat-actions/buildah-build@v2
+        with:
+          context: ${{ env.context }}
+          dockerfiles: |
+            ./${{ env.context }}/Dockerfile
+          image: ${{ env.image_name }}
+          oci: true
+          tags: ${{ steps.check_version.outputs.IMAGE_TAGS }}
+      - name: Test image
+        run: |
+          echo "Running: podman run ${image_name}:${{ steps.check_version.outputs.IMAGE_TAGS }} git --version"
+          podman run ${image_name}:${{ steps.check_version.outputs.IMAGE_TAGS }} git --version
+          echo "Running: podman run ${image_name}:${{ steps.check_version.outputs.IMAGE_TAGS }} pip3 --version"
+          podman run ${image_name}:${{ steps.check_version.outputs.IMAGE_TAGS }} pip3 --version
+          echo "Running: podman run ${image_name}:${{ steps.check_version.outputs.IMAGE_TAGS }} pip3 show google-api-python-client google-auth-httplib2 google-auth-oauthlib"
+          podman run ${image_name}:${{ steps.check_version.outputs.IMAGE_TAGS }} pip3 show google-api-python-client google-auth-httplib2 google-auth-oauthlib
+          echo "Running: podman run ${image_name}:${{ steps.check_version.outputs.IMAGE_TAGS }} upload-file-to-google-drive --help"
+          podman run ${image_name}:${{ steps.check_version.outputs.IMAGE_TAGS }} upload-file-to-google-drive --help

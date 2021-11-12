@@ -1,0 +1,44 @@
+---
+name: build-s2i-python-kopf-publish
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - build-s2i-python-kopf/version.json
+      - .github/workflows/build-s2i-python-kopf-publish.yaml
+jobs:
+  publish:
+    env:
+      CONTEXT_DIR: build-s2i-python-kopf
+      IMAGE_NAME: python-kopf-s2i
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@master
+      - name: Get image tags
+        id: image_tags
+        run: |
+          # version.json should have semantic version: vMAJOR.MINOR.PATCH
+          VERSION=$(jq -r '.version' ${CONTEXT_DIR}/version.json)
+          # Publish to latest, minor, and patch tags
+          TAGS=('latest' "${VERSION}" "${VERSION%.*}")
+          # Set IMAGE_TAGS output for use in next step
+          echo "::set-output name=IMAGE_TAGS::${TAGS[*]}"
+      - name: Build image
+        id: build_image
+        uses: redhat-actions/buildah-build@v2
+        with:
+          context: ${{ env.CONTEXT_DIR }}
+          dockerfiles: |
+            ./${{ env.CONTEXT_DIR }}/Dockerfile
+          image: ${{ env.IMAGE_NAME }}
+          tags: "${{ steps.image_tags.outputs.IMAGE_TAGS }}"
+      - name: Push to Quay
+        id: push_to_quay
+        uses: redhat-actions/push-to-registry@v2
+        with:
+          image: ${{ steps.build_image.outputs.image }}
+          registry: ${{ secrets.REGISTRY_URI }}/${{ secrets.REGISTRY_REPOSITORY }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+          tags: ${{ steps.build_image.outputs.tags }}

@@ -1,0 +1,193 @@
+---
+namespace: jenkins-agents
+repository_url: https://github.com/redhat-cop/containers-quickstarts.git
+agent_repo_ref: master
+templates_repo_ref: v1.4.16
+
+jenkins_agents:
+  build:
+    ansible:
+      BUILDER_IMAGE_NAME: quay.io/openshift/origin-jenkins-agent-base:4.7
+      DOCKERFILE_PATH: Dockerfile
+      NAME: jenkins-agent-ansible
+      SOURCE_CONTEXT_DIR: jenkins-agents/jenkins-agent-ansible
+      SOURCE_REPOSITORY_REF: "{{ agent_repo_ref }}"
+      SOURCE_REPOSITORY_URL: "{{ repository_url }}"
+    arachni: {}
+    argocd: {}
+    conftest:
+      BUILDER_IMAGE_NAME: quay.io/redhat-cop/jenkins-agent-python:v1.0
+    erlang: {}
+    golang: {}
+    graalvm:
+      BUILDER_IMAGE_NAME: quay.io/openshift/origin-jenkins-agent-maven:4.7
+    gradle: {}
+    helm: {}
+    hugo: {}
+    mongodb: {}
+    mvn:
+      BUILDER_IMAGE_NAME: quay.io/openshift/origin-jenkins-agent-maven:4.7
+    npm: {}
+    python: {}
+    ruby: {}
+    rust: {}
+    zap:
+      BUILDER_IMAGE_NAME: centos:centos7
+
+test_pipelines:
+  deploy:
+    ansible:
+      NAME: jenkins-agent-ansible
+      PIPELINE_CONTEXT_DIR: jenkins-agents/jenkins-agent-ansible
+      PIPELINE_FILENAME: Jenkinsfile.test
+      PIPELINE_SOURCE_REPOSITORY_REF: "{{ agent_repo_ref }}"
+      PIPELINE_SOURCE_REPOSITORY_URL: "{{ repository_url }}"
+    arachni:
+      NAME: jenkins-agent-arachni
+      PIPELINE_CONTEXT_DIR: jenkins-agents/jenkins-agent-arachni
+      PIPELINE_FILENAME: Jenkinsfile.test
+      PIPELINE_SOURCE_REPOSITORY_REF: "{{ agent_repo_ref }}"
+      PIPELINE_SOURCE_REPOSITORY_URL: "{{ repository_url }}"
+    argocd:
+      NAME: jenkins-agent-argocd
+      PIPELINE_CONTEXT_DIR: jenkins-agents/jenkins-agent-argocd
+      PIPELINE_FILENAME: Jenkinsfile.test
+      PIPELINE_SOURCE_REPOSITORY_REF: "{{ agent_repo_ref }}"
+      PIPELINE_SOURCE_REPOSITORY_URL: "{{ repository_url }}"
+    conftest:
+      NAME: jenkins-agent-conftest
+      PIPELINE_CONTEXT_DIR: jenkins-agents/jenkins-agent-conftest
+      PIPELINE_FILENAME: Jenkinsfile.test
+      PIPELINE_SOURCE_REPOSITORY_REF: "{{ agent_repo_ref }}"
+      PIPELINE_SOURCE_REPOSITORY_URL: "{{ repository_url }}"
+    erlang:
+      NAME: jenkins-agent-erlang
+      PIPELINE_CONTEXT_DIR: jenkins-agents/jenkins-agent-erlang
+      PIPELINE_FILENAME: Jenkinsfile.test
+      PIPELINE_SOURCE_REPOSITORY_REF: "{{ agent_repo_ref }}"
+      PIPELINE_SOURCE_REPOSITORY_URL: "{{ repository_url }}"
+    helm:
+      NAME: jenkins-agent-helm
+      PIPELINE_CONTEXT_DIR: jenkins-agents/jenkins-agent-helm
+      PIPELINE_FILENAME: Jenkinsfile.test
+      PIPELINE_SOURCE_REPOSITORY_REF: "{{ agent_repo_ref }}"
+      PIPELINE_SOURCE_REPOSITORY_URL: "{{ repository_url }}"
+    hugo:
+      NAME: jenkins-agent-hugo
+      PIPELINE_CONTEXT_DIR: jenkins-agents/jenkins-agent-hugo
+      PIPELINE_FILENAME: Jenkinsfile.test
+      PIPELINE_SOURCE_REPOSITORY_REF: "{{ agent_repo_ref }}"
+      PIPELINE_SOURCE_REPOSITORY_URL: "{{ repository_url }}"
+    image-mgmt:
+      NAME: jenkins-agent-image-mgmt
+      PIPELINE_CONTEXT_DIR: jenkins-agents/jenkins-agent-image-mgmt
+      PIPELINE_FILENAME: Jenkinsfile.test
+      PIPELINE_SOURCE_REPOSITORY_REF: "{{ agent_repo_ref }}"
+      PIPELINE_SOURCE_REPOSITORY_URL: "{{ repository_url }}"
+    golang:
+      NAME: jenkins-agent-golang
+      PIPELINE_CONTEXT_DIR: jenkins-agents/jenkins-agent-golang
+      PIPELINE_FILENAME: Jenkinsfile.test
+      PIPELINE_SOURCE_REPOSITORY_REF: "{{ agent_repo_ref }}"
+      PIPELINE_SOURCE_REPOSITORY_URL: "{{ repository_url }}"
+    graalvm:
+      NAME: jenkins-agent-graalvm
+      PIPELINE_CONTEXT_DIR: jenkins-agents/jenkins-agent-graalvm
+      PIPELINE_FILENAME: Jenkinsfile.test
+      PIPELINE_SOURCE_REPOSITORY_REF: "{{ agent_repo_ref }}"
+      PIPELINE_SOURCE_REPOSITORY_URL: "{{ repository_url }}"
+    gradle:
+      NAME: jenkins-agent-gradle
+      PIPELINE_CONTEXT_DIR: jenkins-agents/jenkins-agent-gradle
+      PIPELINE_FILENAME: Jenkinsfile.test
+      PIPELINE_SOURCE_REPOSITORY_REF: "{{ agent_repo_ref }}"
+      PIPELINE_SOURCE_REPOSITORY_URL: "{{ repository_url }}"
+    image-mgmt:
+      NAME: jenkins-agent-image-mgmt
+      PIPELINE_CONTEXT_DIR: jenkins-agents/jenkins-agent-image-mgmt
+      PIPELINE_FILENAME: Jenkinsfile.test
+      PIPELINE_SOURCE_REPOSITORY_REF: "{{ agent_repo_ref }}"
+      PIPELINE_SOURCE_REPOSITORY_URL: "{{ repository_url }}"
+    mongodb:
+      NAME: jenkins-agent-mongodb
+      PIPELINE_CONTEXT_DIR: jenkins-agents/jenkins-agent-mongodb
+      PIPELINE_FILENAME: Jenkinsfile.test
+      PIPELINE_SOURCE_REPOSITORY_REF: "{{ agent_repo_ref }}"
+      PIPELINE_SOURCE_REPOSITORY_URL: "{{ repository_url }}"
+    mvn:
+      NAME: jenkins-agent-mvn
+      PIPELINE_CONTEXT_DIR: jenkins-agents/jenkins-agent-mvn
+      PIPELINE_FILENAME: Jenkinsfile.test
+      PIPELINE_SOURCE_REPOSITORY_REF: "{{ agent_repo_ref }}"
+      PIPELINE_SOURCE_REPOSITORY_URL: "{{ repository_url }}"
+    npm:
+      NAME: jenkins-agent-npm
+      PIPELINE_CONTEXT_DIR: jenkins-agents/jenkins-agent-npm
+      PIPELINE_FILENAME: Jenkinsfile.test
+      PIPELINE_SOURCE_REPOSITORY_REF: "{{ agent_repo_ref }}"
+      PIPELINE_SOURCE_REPOSITORY_URL: "{{ repository_url }}"
+    python:
+      NAME: jenkins-agent-python
+      PIPELINE_CONTEXT_DIR: jenkins-agents/jenkins-agent-python
+      PIPELINE_FILENAME: Jenkinsfile.test
+      PIPELINE_SOURCE_REPOSITORY_REF: "{{ agent_repo_ref }}"
+      PIPELINE_SOURCE_REPOSITORY_URL: "{{ repository_url }}"
+    ruby:
+      NAME: jenkins-agent-ruby
+      PIPELINE_CONTEXT_DIR: jenkins-agents/jenkins-agent-ruby
+      PIPELINE_FILENAME: Jenkinsfile.test
+      PIPELINE_SOURCE_REPOSITORY_REF: "{{ agent_repo_ref }}"
+      PIPELINE_SOURCE_REPOSITORY_URL: "{{ repository_url }}"
+    rust:
+      NAME: jenkins-agent-rust
+      PIPELINE_CONTEXT_DIR: jenkins-agents/jenkins-agent-rust
+      PIPELINE_FILENAME: Jenkinsfile.test
+      PIPELINE_SOURCE_REPOSITORY_REF: "{{ agent_repo_ref }}"
+      PIPELINE_SOURCE_REPOSITORY_URL: "{{ repository_url }}"
+    zap:
+      NAME: jenkins-agent-zap
+      PIPELINE_CONTEXT_DIR: jenkins-agents/jenkins-agent-zap
+      PIPELINE_FILENAME: Jenkinsfile.test
+      PIPELINE_SOURCE_REPOSITORY_REF: "{{ agent_repo_ref }}"
+      PIPELINE_SOURCE_REPOSITORY_URL: "{{ repository_url }}"
+
+openshift_cluster_content:
+- object: Environment Setup
+  content:
+  - name: Create Projects
+    template: "https://raw.githubusercontent.com/redhat-cop/openshift-templates/{{ templates_repo_ref }}/project-requests/create-project.yml"
+    action: create
+    params_from_vars:
+      NAMESPACE: "{{ namespace }}"
+      NAMESPACE_DESCRIPTION: "{{ namespace }}"
+      NAMESPACE_DISPLAY_NAME: "{{ namespace }}"
+    tags:
+      - project
+- object: jenkins-ephemeral
+  content:
+  - name: jenkins-ephemeral
+    template: 'openshift//jenkins-ephemeral'
+    namespace: "{{ namespace }}"
+    tags:
+      - jenkins-ephemeral
+- object: jenkins-agent-nodes
+  content:
+  - name: jenkins-agents
+    template: "{{ inventory_dir }}/../.openshift/templates/jenkins-agent-generic-template.j2"
+    params_from_vars: "{{ jenkins_agents.build }}"
+    namespace: "{{ namespace }}"
+    tags:
+      - jenkins-agents
+  - name: jenkins-agent-image-mgmt
+    template: "{{ inventory_dir }}/../.openshift/templates/jenkins-agent-image-mgmt-template.yml"
+    namespace: "{{ namespace }}"
+    tags:
+      - jenkins-agents
+- object: test-pipelines
+  content:
+  - name: Deploy jenkins-agent test pipelines
+    file: "{{ inventory_dir }}/../.openshift/templates/jenkins-pipeline-template-no-ocp-triggers.j2"
+    params_from_vars: "{{ test_pipelines.deploy }}"
+    namespace: "{{ namespace }}"
+    tags:
+      - test-pipelines

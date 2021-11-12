@@ -1,0 +1,18 @@
+pipeline {
+    agent {
+      label 'jenkins-agent-golang'
+    }
+
+    stages {
+        stage ('Run Test') {
+            steps {
+              sh """
+                  go version
+                  JAVA_HOME=/usr/lib/jvm/jre-11 sonar-scanner -v
+              """
+            }
+        }
+
+    }
+
+}
